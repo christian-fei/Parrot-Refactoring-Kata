@@ -1,38 +1,43 @@
-export const PARROT_TYPES = {
-    EUROPEAN:       'EUROPEAN',
-    AFRICAN:        'AFRICAN',
-    NORWEGIAN_BLUE: 'NORWEGIAN_BLUE',
-};
+const PARROT_TYPES = {
+  EUROPEAN: 'EUROPEAN',
+  AFRICAN: 'AFRICAN',
+  NORWEGIAN_BLUE: 'NORWEGIAN_BLUE'
+}
 
-export class Parrot {
-    constructor(type, numberOfCoconuts, voltage, isNailed) {
-        this.type = type;
-        this.numberOfCoconuts = numberOfCoconuts;
-        this.voltage = voltage;
-        this.isNailed = isNailed;
-    }
+module.exports = {
+  PARROT_TYPES,
+  Parrot
+}
 
-    getSpeed() {
-        switch (this.type) {
-            case PARROT_TYPES.EUROPEAN:
-                return this.getBaseSpeed();
-            case PARROT_TYPES.AFRICAN:
-                return Math.max(0, this.getBaseSpeed() - this.getLoadFactor() * this.numberOfCoconuts);
-            case PARROT_TYPES.NORWEGIAN_BLUE:
-                return (this.isNailed) ? 0 : this.getBaseSpeedWithVoltage(this.voltage);
-        }
-        throw new Error("Should be unreachable");
-    }
+function Parrot (type, numberOfCoconuts, voltage, isNailed) {
+  return {
+    getSpeed,
+    getBaseSpeedWithVoltage,
+    getLoadFactor,
+    getBaseSpeed
+  }
 
-    getBaseSpeedWithVoltage(voltage) {
-        return Math.min(24, voltage * this.getBaseSpeed());
+  function getSpeed () {
+    switch (type) {
+      case PARROT_TYPES.EUROPEAN:
+        return getBaseSpeed()
+      case PARROT_TYPES.AFRICAN:
+        return Math.max(0, getBaseSpeed() - getLoadFactor() * numberOfCoconuts)
+      case PARROT_TYPES.NORWEGIAN_BLUE:
+        return (isNailed) ? 0 : getBaseSpeedWithVoltage(voltage)
     }
+    throw new Error('Should be unreachable')
+  }
 
-    getLoadFactor() {
-        return 9;
-    }
+  function getBaseSpeedWithVoltage (voltage) {
+    return Math.min(24, voltage * getBaseSpeed())
+  }
 
-    getBaseSpeed() {
-        return 12;
-    }
+  function getLoadFactor () {
+    return 9
+  }
+
+  function getBaseSpeed () {
+    return 12
+  }
 }
