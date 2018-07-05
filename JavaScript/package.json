@@ -9,6 +9,6 @@
   "author": "Attila Kerekes",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^21.0.1"
+    "jest": "^23.3.0"
   }
 }
